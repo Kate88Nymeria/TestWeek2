@@ -51,6 +51,12 @@ namespace Library.Utilities
                 }
             } while (continueExec);
 
+            if(goodToAdd != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine("Good correctly inserted");
+            }
+
             return goodToAdd;
         }
 
@@ -73,6 +79,15 @@ namespace Library.Utilities
                 choice = Helpers.CheckNullString();
 
                 goodToRemove = w.SearchGood(choice);
+
+                if(goodToRemove != null)
+                {
+                    Console.WriteLine("Good correctly removed");
+                }
+                else
+                {
+                    Console.WriteLine("Good not found");
+                }
             }
             return goodToRemove;
         }

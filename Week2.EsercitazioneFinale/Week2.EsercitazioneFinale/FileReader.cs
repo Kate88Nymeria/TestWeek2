@@ -1,4 +1,5 @@
 ﻿using Library;
+using Library.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,27 +11,43 @@ namespace Week2.EsercitazioneFinale
 {
     public class FileReader
     {
-        //public List<Good> ReadFile(string path)
-        //{
-        //    List<Good> goods = new List<Good>();
-        //    Good readedGood = null;
+        public static List<Good> ReadFile(string path)
+        {
+            List<Good> goods = new List<Good>();
+            Good readedGood = null;
 
-        //    using (StreamReader reader = File.OpenText(path))
-        //    {
-        //        string line;
-        //        line = reader.ReadLine();
+            using (StreamReader reader = File.OpenText(path))
+            {
+                string line;
+                line = reader.ReadLine();
 
-        //        while ((line = reader.ReadLine()) != null)
-        //        {
-        //            string[] details = line.Split(';');
-        //            if (!details[5].Equals("-"))
-        //            {
+                Console.WriteLine("Loading file...");
+                while ((line = reader.ReadLine()) != null)
+                {
+                    LoadedGood loadedGood = LoadedGood.ParseLineFromFile(line);
+                    if (!string.IsNullOrEmpty(loadedGood.Producer))
+                    {
+                        readedGood = new ElectronicGood(loadedGood.Code, loadedGood.Description, loadedGood.Price,
+                                                        loadedGood.ReceiptDate, loadedGood.StockQuantity, loadedGood.Producer);
+                        goods.Add(readedGood);
+                    }
+                    if (loadedGood.Type.HasValue && loadedGood.AlcoholContent.HasValue)
+                    {
+                        readedGood = new SpiritDrinkGood(loadedGood.Code, loadedGood.Description, loadedGood.Price,
+                                                        loadedGood.ReceiptDate, loadedGood.StockQuantity, (TypeOfDrink)loadedGood.Type, (double)loadedGood.AlcoholContent);
+                        goods.Add(readedGood);
+                    }
+                    if (loadedGood.ExpiryDate.HasValue && loadedGood.Storage.HasValue)
+                    {
+                        readedGood = new PerishableGood(loadedGood.Code, loadedGood.Description, loadedGood.Price,
+                                                        loadedGood.ReceiptDate, loadedGood.StockQuantity, (DateTime)loadedGood.ExpiryDate, (StorageCondition)loadedGood.Storage);
+                        goods.Add(readedGood);
+                    }
+                }
+            }
 
-        //            }
-        //        }
-        //    }
-
-        //    return goods;
-        //}
+            Console.WriteLine("Loading Completed");
+            return goods;
+        }
     }
 }

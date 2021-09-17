@@ -12,6 +12,8 @@ namespace Week2.EsercitazioneFinale
     {
         static Warehouse myWarehouse = new Warehouse(Guid.NewGuid(),
                                 "Via Roma 124, Milano - Italy", new DateTime(2021, 08, 13));
+
+        static string path = @"C:\Users\katia.caracciolo\Desktop\Projects\Week2\Week2.EsercitazioneFinale\goods.txt";
         public static void ManageWarehouse()
         {
             bool continueExec = true;
@@ -22,7 +24,7 @@ namespace Week2.EsercitazioneFinale
                 Console.WriteLine("1 - View Your Warehouse's State");
                 Console.WriteLine("2 - Add a Good to your Warehouse");
                 Console.WriteLine("3 - Remove a Good from your Warehouse");
-                Console.WriteLine("4 - Read Goods from file (not yet implemented)");//non ho fatto in tempo a terminarlo
+                Console.WriteLine("4 - Read Goods from file");
                 Console.WriteLine("5 - Exit");
                 Console.WriteLine();
 
@@ -52,7 +54,7 @@ namespace Week2.EsercitazioneFinale
                         break;
                     case 4:
                         Console.Clear();
-                        Console.WriteLine("Sorry: Method Not yet implemented");
+                        myWarehouse.StockGoods = FileReader.ReadFile(path);
                         Helpers.ContinueExecution();
                         Console.Clear();
                         break;

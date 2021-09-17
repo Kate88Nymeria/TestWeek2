@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Library
 {
-    public class Warehouse
+    public class Warehouse : IEnumerable<Good>
     {
         public Guid Id { get; set; }
         public string Address { get; set; }
@@ -86,7 +87,7 @@ namespace Library
 
             foreach(Good g in StockGoods)
             {
-                tot += g.Price;
+                tot += (g.Price*g.StockQuantity);
             }
 
             return tot;
@@ -111,5 +112,22 @@ namespace Library
 
             return sb.ToString() ;
         }
+
+
+        #region IEnumerable
+        public IEnumerator<Good> GetEnumerator()
+        {
+            foreach(Good g in StockGoods)
+            {
+                yield return g;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
     }
 }

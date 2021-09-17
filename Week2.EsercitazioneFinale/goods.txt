@@ -1,4 +1,4 @@
 Code;Description;Price;ReceiptDate;StockQuantity;Producer;TypeOfDrink;AlcoholContent;ExpiryDate;StorageCondition;
 EL87;Smartphone;243,4;2020/11/24;19;Oppo;-;-;-;-;
-PE65;Strawberry Ice-Cream;3,60;2021/07/16;54;-;-;-;2024/03/30;Freezer;
+PE65;Vanilla Ice-Cream;3,60;2021/07/16;54;-;-;-;2024/03/30;Freezer;
 SD25;Havana Club;13.40;2020/12/13;19;-;Other;90,3;-;-;
