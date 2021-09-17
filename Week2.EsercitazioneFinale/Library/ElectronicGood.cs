@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,10 @@ namespace Library
         #region ctor
         public ElectronicGood(string code, string desc, decimal price, DateTime recDate, int quantity, string prod) : base(code, desc, price, recDate, quantity)
         {
+            if (string.IsNullOrEmpty(prod))
+            {
+                throw new GoodException("Invalid Producer");
+            }
             Producer = prod;
         }
         #endregion

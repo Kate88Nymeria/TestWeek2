@@ -10,7 +10,7 @@ namespace Week2.EsercitazioneFinale
 {
     public class WarehouseManager
     {
-        static Warehouse myWarehouse = new Warehouse(Guid.NewGuid(),
+        public static Warehouse myWarehouse = new Warehouse(Guid.NewGuid(),
                                 "Via Roma 124, Milano - Italy", new DateTime(2021, 08, 13));
 
         static string path = @"C:\Users\katia.caracciolo\Desktop\Projects\Week2\Week2.EsercitazioneFinale\goods.txt";
@@ -54,7 +54,9 @@ namespace Week2.EsercitazioneFinale
                         break;
                     case 4:
                         Console.Clear();
-                        myWarehouse.StockGoods = FileReader.ReadFile(path);
+                        myWarehouse.StockGoods = LoadFile();
+                        //FileReader fr = new FileReader();
+                        //myWarehouse.StockGoods = fr.ReadFile(path);
                         Helpers.ContinueExecution();
                         Console.Clear();
                         break;
@@ -70,5 +72,47 @@ namespace Week2.EsercitazioneFinale
 
             }while(continueExec);
         }
+
+        public static List<Good> LoadFile()
+        {
+            FileReader fr = new FileReader();
+            List<Good> goods = fr.ReadFile(path);
+
+            fr.StartReading += Fr_StartReading;
+            fr.ProgressReading += Fr_ProgressReading;
+            fr.CompleteReading += Fr_CompleteReading;
+
+            try
+            {
+                fr.ReadFile(path);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error reading data. Message: {ex.Message}");
+            }
+
+            return goods;
+        }
+
+        #region EventHandler
+
+        private static void Fr_CompleteReading(object sender, LoadingEventArgs e)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Loading Completed");
+        }
+
+        private static void Fr_ProgressReading(object sender, LoadingEventArgs e)
+        {
+            Console.WriteLine("Loading in Progress...");
+        }
+        
+        private static void Fr_StartReading(string file)
+        {
+            Console.WriteLine("Starting Loading...");
+            Console.WriteLine();
+        }
+
+        #endregion
     }
 }

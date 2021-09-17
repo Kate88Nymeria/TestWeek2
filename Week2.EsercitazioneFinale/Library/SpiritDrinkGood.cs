@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,11 @@ namespace Library
 
         public SpiritDrinkGood(string code, string desc, decimal price, DateTime recDate, int quantity, TypeOfDrink type, double alc) : base(code, desc, price, recDate, quantity)
         {
+            if(alc <= 0)
+            {
+                throw new GoodException("Invalid Alcohol Content");
+            }
+
             Type = type;
             AlcoholContent = alc;
         }
